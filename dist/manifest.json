@@ -1,0 +1,99 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "1.38.2",
+  "icons": {
+    "16": "src/assets/icon.png",
+    "32": "src/assets/icon.png",
+    "48": "src/assets/icon.png",
+    "128": "src/assets/icon.png"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "action": {},
+  "host_permissions": [
+    "https://*.bing.com/",
+    "https://*.openai.com/",
+    "https://bard.google.com/",
+    "https://*.chathub.gg/",
+    "https://*.duckduckgo.com/",
+    "https://*.poe.com/",
+    "https://*.anthropic.com/",
+    "https://*.claude.ai/"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "wss://*/*"
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "sidePanel",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "assets/chatgpt-inpage-proxy.ts-loader-57184508.js"
+      ],
+      "matches": [
+        "https://chat.openai.com/*"
+      ]
+    }
+  ],
+  "commands": {
+    "open-app": {
+      "suggested_key": {
+        "default": "Alt+J",
+        "windows": "Alt+J",
+        "linux": "Alt+J",
+        "mac": "Command+J"
+      },
+      "description": "Open ChatHub app"
+    }
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_bing",
+        "enabled": true,
+        "path": "src/rules/bing.json"
+      },
+      {
+        "id": "ruleset_ddg",
+        "enabled": true,
+        "path": "src/rules/ddg.json"
+      },
+      {
+        "id": "ruleset_qianwen",
+        "enabled": true,
+        "path": "src/rules/qianwen.json"
+      },
+      {
+        "id": "ruleset_baichuan",
+        "enabled": true,
+        "path": "src/rules/baichuan.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "resources": [
+        "assets/browser-polyfill-5e752e65.js",
+        "assets/proxy-fetch-95bcdef2.js",
+        "assets/chatgpt-inpage-proxy.ts-33515ce3.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}
